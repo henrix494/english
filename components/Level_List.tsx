@@ -10,7 +10,7 @@ export default function Level_List() {
   const [level, set_level] = useState<string>("");
   return (
     <>
-      <div className="flex justify-center gap-10 mt-10 ">
+      <div className="flex justify-center gap-10 mt-10 flex-wrap">
         {english_levels.map((item, index) => {
           return (
             <Card
@@ -18,7 +18,7 @@ export default function Level_List() {
                 set_selected_index(index);
                 set_level(item);
               }}
-              className={`w-[500px] h-[100px] border-0 transition-all ${
+              className={`w-[250px] h-[100px] border-0 transition-all ${
                 selected_index === index && "border-2"
               }`}
               key={index}

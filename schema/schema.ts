@@ -1,22 +1,40 @@
 import { z } from "zod";
-export const text_scema = z.object({
+
+// Define the schema
+export const text_schema = z.object({
   text_and_questions: z.array(
     z.object({
-      title: z.string().describe("Title of the text"),
-      text_body: z.string().describe("Full body of the text"),
+      title: z.string().describe("The title of the text."),
+
+      text_body: z
+        .array(z.string())
+        .min(3, "The text body must have at least 3 sections ")
+        .describe(
+          "An array of sections representing the text body. Split the text into at least 3 meaningful sections ."
+        ),
+
       possible_answers: z.array(
         z.object({
           questions: z
             .string()
             .describe(
-              "5 questions  about the text from random areas in the whole text"
+              "A question related to the text. There must be 5 questions covering random areas of the text."
             ),
-          possible_answers: z.array(
-            z.object({
-              answer: z.string().describe("4 Options for an Answer ."),
-              is_true: z.boolean().describe("is answer correct"),
-            })
-          ),
+
+          possible_answers: z
+            .array(
+              z.object({
+                answer: z
+                  .string()
+                  .describe(
+                    "An option for the answer. There must be exactly 4 options for each question."
+                  ),
+                is_true: z
+                  .boolean()
+                  .describe("Indicates whether the answer is correct."),
+              })
+            )
+            .length(4, "Each question must have exactly 4 possible answers."),
         })
       ),
     })

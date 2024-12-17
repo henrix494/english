@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
+import { Button, cn, Radio, RadioGroup } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Confetti from "react-confetti";
@@ -79,18 +79,30 @@ export default function Questions({ questions }: Props) {
   }, [questions]);
 
   return (
-    <div className="">
+    <div className="flex flex-col ">
       <Toaster richColors />
       <h2>Questions</h2>
       {shuffledQuestions?.map((question, index) => (
-        <div key={index} className="mb-4 mt-10 ml-5 border-2 pl-4 py-2">
-          <p className="font-bold">{question.questions}</p>
-          <div className="flex flex-row">
-            <RadioGroup className="mt-10 flex-row" orientation="horizontal">
+        <div
+          key={index}
+          className="mb-4 mt-10 lg:ml-5 border-2 lg:pl-4 py-2 max-lg:text-center    "
+        >
+          <p className="font-bold ">{question.questions}</p>
+          <div className=" ">
+            <RadioGroup
+              orientation="horizontal"
+              classNames={{
+                base: cn(
+                  "max:lg-inline-flex m-0 flex flex-row     ",
+                  " cursor-pointer rounded-lg gap-4 py-4 border-2 border-transparent",
+                  "data-[selected=true]:border-primary"
+                ),
+              }}
+            >
               {question.possible_answers.map((answer, answerIndex) => (
                 <div
                   key={answerIndex}
-                  className="px-5 py-2 bg-white rounded-xl"
+                  className="px-5 py-2 bg-white rounded-xl mr-2 max-lg:mb-2"
                 >
                   <Radio
                     isDisabled={radio_choice.some(
@@ -100,7 +112,7 @@ export default function Questions({ questions }: Props) {
                       set_radio_choice_handler(index, answer.is_true);
                     }}
                     value={answer.answer}
-                    className="text-gray-600"
+                    className="text-black font-medium "
                   >
                     {answer.answer}
                   </Radio>
