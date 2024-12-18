@@ -1,10 +1,8 @@
 "use client";
-
 import { Button, cn, Radio, RadioGroup } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Confetti from "react-confetti";
-import { ModelFinish } from "./ModelFinish";
 
 interface Answer {
   answer: string;
@@ -52,7 +50,6 @@ export default function Questions({ questions }: Props) {
   const [confettiPieces, setConfettiPieces] = useState(0);
 
   const setAnswershandler = (index: number) => {
-    console.log()
     set_btn_hanlder(index);
     const selectedChoice = radio_choice.find((item) => item.index === index);
     if (selectedChoice?.isOK) {
@@ -128,9 +125,9 @@ export default function Questions({ questions }: Props) {
             </RadioGroup>
 
           </div>
-          {btn_add.some(item => item === index) && !radio_choice[index].isOK && <div className=" flex px-10"><p>{question.possible_answers.map(item => {
+          {btn_add.some(item => item === index) && !radio_choice[index].isOK && <div key={index} className=" flex px-10"><p>{question.possible_answers.map(item => {
             if (item.is_true) {
-              return <p className="bg-[#ffffff88] p-3 rounded-xl"> The correct answer is: {item.answer}</p>
+              return <p key={index} className="bg-[#ffffff88] p-3 rounded-xl"> The correct answer is: {item.answer}</p>
             }
           })}</p>
           </div>}

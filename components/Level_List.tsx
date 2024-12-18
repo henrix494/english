@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { english_levels } from "@/constants";
-import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Text_Generetor from "./Text_Generetor";
-import { Toaster, toast } from "sonner";
 
 export default function Level_List() {
   const [selected_index, set_selected_index] = useState<boolean | number>(true);
@@ -18,9 +17,8 @@ export default function Level_List() {
                 set_selected_index(index);
                 set_level(item);
               }}
-              className={`w-[250px] h-[100px] border-0 transition-all ${
-                selected_index === index && "border-2"
-              }`}
+              className={`w-[250px] h-[100px] border-0 transition-all ${selected_index === index && "border-2"
+                }`}
               key={index}
               isPressable
             >

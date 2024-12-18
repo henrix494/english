@@ -72,7 +72,7 @@ export default function Text_Generetor({ level }: { level: string }) {
                       <div className="">
                         <section className="text-base leading-7 font-bold  ">
                           {item?.text_body?.map((item) => {
-                            return <p className="mt-4">{item}</p>;
+                            return <p className="mt-4" key={item}>{item}</p>;
                           })}
                         </section>
                       </div>
