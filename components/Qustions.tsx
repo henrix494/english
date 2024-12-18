@@ -4,6 +4,7 @@ import { Button, cn, Radio, RadioGroup } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Confetti from "react-confetti";
+import { ModelFinish } from "./ModelFinish";
 
 interface Answer {
   answer: string;
@@ -51,6 +52,7 @@ export default function Questions({ questions }: Props) {
   const [confettiPieces, setConfettiPieces] = useState(0);
 
   const setAnswershandler = (index: number) => {
+    console.log()
     set_btn_hanlder(index);
     const selectedChoice = radio_choice.find((item) => item.index === index);
     if (selectedChoice?.isOK) {
@@ -60,6 +62,7 @@ export default function Questions({ questions }: Props) {
     } else {
       toast.error("Wrong answer");
     }
+
   };
 
   const decreaseConfettiOverTime = () => {
@@ -81,7 +84,6 @@ export default function Questions({ questions }: Props) {
     }));
     setShuffledQuestions(shuffled);
   }, [questions]);
-
   return (
     <div className="flex flex-col ">
       <Toaster richColors />

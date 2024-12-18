@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "installDep":"npm i --legacy-peer-deps"
+    "installDep": "npm i --legacy-peer-deps"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.0.10",
