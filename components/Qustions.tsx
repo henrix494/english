@@ -31,6 +31,7 @@ export default function Questions({ questions }: Props) {
   const [radio_choice, set_radio_choice] = useState<
     { index: number; isOK: boolean }[]
   >([]);
+  const [btn_add, set_btn_add] = useState<number[]>([])
   const [shuffledQuestions, setShuffledQuestions] = useState<
     { possible_answers: Answer[] }[]
   >([]);
@@ -44,10 +45,13 @@ export default function Questions({ questions }: Props) {
       return [...updatedChoices, { index: index, isOK: choice }];
     });
   };
-
+  const set_btn_hanlder = (index: number) => {
+    set_btn_add([...btn_add, index])
+  }
   const [confettiPieces, setConfettiPieces] = useState(0);
 
   const setAnswershandler = (index: number) => {
+    set_btn_hanlder(index);
     const selectedChoice = radio_choice.find((item) => item.index === index);
     if (selectedChoice?.isOK) {
       toast.success("You got It Right!");
@@ -119,8 +123,16 @@ export default function Questions({ questions }: Props) {
                 </div>
               ))}
             </RadioGroup>
+
           </div>
-          <Button onPress={() => setAnswershandler(index)} className="mt-10">
+          {btn_add.some(item => item === index) && !radio_choice[index].isOK && <div className=" flex px-10"><p>{question.possible_answers.map(item => {
+            if (item.is_true) {
+              return <p className="bg-[#ffffff88] p-3 rounded-xl"> The correct answer is: {item.answer}</p>
+            }
+          })}</p>
+          </div>}
+
+          <Button onPress={() => setAnswershandler(index)} isDisabled={btn_add.some(item => item === index)} className="mt-10">
             Check Answer
           </Button>
         </div>
