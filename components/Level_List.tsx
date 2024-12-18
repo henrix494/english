@@ -5,8 +5,10 @@ import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Text_Generetor from "./Text_Generetor";
 
 export default function Level_List() {
-  const [selected_index, set_selected_index] = useState<boolean | number>(true);
-  const [level, set_level] = useState<string>("");
+  const [level, set_level] = useState<{
+    level: string;
+    selected_index: number;
+  }>();
   return (
     <>
       <div className="flex justify-center gap-10 mt-10 flex-wrap">
@@ -14,11 +16,11 @@ export default function Level_List() {
           return (
             <Card
               onPress={() => {
-                set_selected_index(index);
-                set_level(item);
+                set_level({ level: item, selected_index: index });
               }}
-              className={`w-[250px] h-[100px] border-0 transition-all ${selected_index === index && "border-2"
-                }`}
+              className={`w-[250px] h-[100px] border-0 transition-all ${
+                level?.selected_index === index && "border-2"
+              }`}
               key={index}
               isPressable
             >
@@ -38,7 +40,7 @@ export default function Level_List() {
         })}
       </div>
       <div className="flex justify-center mt-10">
-        <Text_Generetor level={level} />
+        <Text_Generetor level={level?.level as string} />
       </div>
     </>
   );

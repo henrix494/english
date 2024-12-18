@@ -4,6 +4,7 @@ import { experimental_useObject as useObject } from "ai/react";
 import { text_schema } from "@/schema/schema";
 import { Card, Skeleton } from "@nextui-org/react";
 import Qustions from "./Qustions";
+import Loader from "./Loader";
 
 export default function Text_Generetor({ level }: { level: string }) {
   // Dummy onsubmit function to simulate an API call or action
@@ -19,44 +20,7 @@ export default function Text_Generetor({ level }: { level: string }) {
         </Button>
       </div>
       {isLoading ? (
-        <div className="flex gap-10 mt-10">
-          <div className="flex flex-col gap-3 w-[50%]">
-            <Card className="w-[40vw] h-[400px] space-y-5 p-4" radius="lg">
-              <Skeleton className="rounded-lg" isLoaded={false}>
-                <div className="h-24 rounded-lg bg-secondary" />
-              </Skeleton>
-              <div className="space-y-3">
-                <Skeleton className="w-3/5 rounded-lg" isLoaded={false}>
-                  <div className="h-3 w-full rounded-lg bg-secondary" />
-                </Skeleton>
-                <Skeleton className="w-4/5 rounded-lg" isLoaded={false}>
-                  <div className="h-3 w-full rounded-lg bg-secondary-300" />
-                </Skeleton>
-                <Skeleton className="w-2/5 rounded-lg" isLoaded={false}>
-                  <div className="h-3 w-full rounded-lg bg-secondary-200" />
-                </Skeleton>
-              </div>
-            </Card>
-          </div>
-          <div className="flex flex-col gap-3">
-            <Card className="w-[40vw] h-[400px] space-y-5 p-4" radius="lg">
-              <Skeleton className="rounded-lg" isLoaded={false}>
-                <div className="h-24 rounded-lg bg-secondary" />
-              </Skeleton>
-              <div className="space-y-3">
-                <Skeleton className="w-3/5 rounded-lg" isLoaded={false}>
-                  <div className="h-3 w-full rounded-lg bg-secondary" />
-                </Skeleton>
-                <Skeleton className="w-4/5 rounded-lg" isLoaded={false}>
-                  <div className="h-3 w-full rounded-lg bg-secondary-300" />
-                </Skeleton>
-                <Skeleton className="w-2/5 rounded-lg" isLoaded={false}>
-                  <div className="h-3 w-full rounded-lg bg-secondary-200" />
-                </Skeleton>
-              </div>
-            </Card>
-          </div>
-        </div>
+        <Loader />
       ) : (
         <div className=" px-2  lg:px-6 mt-10   ">
           <div className="">
@@ -72,7 +36,11 @@ export default function Text_Generetor({ level }: { level: string }) {
                       <div className="">
                         <section className="text-base leading-7 font-bold  ">
                           {item?.text_body?.map((item) => {
-                            return <p className="mt-4" key={item}>{item}</p>;
+                            return (
+                              <p className="mt-4" key={item}>
+                                {item}
+                              </p>
+                            );
                           })}
                         </section>
                       </div>

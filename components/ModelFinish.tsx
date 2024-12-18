@@ -1,54 +1,74 @@
-"use client"
+"use client";
 import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
-    useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Progress,
+  Badge,
+  Avatar,
 } from "@nextui-org/react";
-import { useState } from "react";
-export function ModelFinish({ isOpenFrom }: { isOpenFrom: boolean }) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [stateMange, setStatemange] = useState(isOpenFrom)
-    return (
-        <>
-            <Modal isOpen={isOpenFrom && stateMange} onOpenChange={onOpenChange}>
-                <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
-                            <ModalBody>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
-                                    risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                                    quam.
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus non
-                                    risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed porttitor
-                                    quam.
-                                </p>
-                                <p>
-                                    Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit dolor
-                                    adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
-                                    officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                                    nisi consectetur esse laborum eiusmod pariatur proident Lorem eiusmod et. Culpa
-                                    deserunt nostrud ad veniam.
-                                </p>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="light" onClose={() => {
-                                    setStatemange(false)
-                                }}>
-                                    Close
-                                </Button>
+import { useEffect, useState } from "react";
+export function ModelFinish({
+  model_handler,
+  changeCloseModel,
+  radio_choice,
+}: {
+  model_handler: boolean;
+  changeCloseModel: () => void;
+  radio_choice: { index: number; isOK: boolean }[];
+}) {
+  const { onOpenChange } = useDisclosure();
+  const [value, setValue] = useState(0);
+  let totalOk = radio_choice.filter((item) => item.isOK === true).length;
 
-                            </ModalFooter>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
-        </>)
+  useEffect(() => {
+    setValue((totalOk / radio_choice.length) * 100);
+  }, [radio_choice]);
+  return (
+    <>
+      <Modal
+        closeButton={<div></div>}
+        isOpen={model_handler}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 items-center">
+                Score
+              </ModalHeader>
+              <ModalBody>
+                <p className="text-center   inline self-center  text-white font-bold text-2xl ">
+                  You got {totalOk}/{radio_choice.length} Right
+                </p>
+
+                <Progress
+                  aria-label="Downloading..."
+                  className="max-w-md"
+                  color="success"
+                  showValueLabel={true}
+                  size="md"
+                  translate="yes"
+                  value={value}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={changeCloseModel}
+                >
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+  );
 }

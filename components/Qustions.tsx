@@ -3,6 +3,7 @@ import { Button, cn, Radio, RadioGroup } from "@nextui-org/react";
 import React, { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Confetti from "react-confetti";
+import { ModelFinish } from "./ModelFinish";
 
 interface Answer {
   answer: string;
@@ -30,11 +31,11 @@ export default function Questions({ questions }: Props) {
   const [radio_choice, set_radio_choice] = useState<
     { index: number; isOK: boolean }[]
   >([]);
-  const [btn_add, set_btn_add] = useState<number[]>([])
+  const [btn_add, set_btn_add] = useState<number[]>([]);
   const [shuffledQuestions, setShuffledQuestions] = useState<
     { possible_answers: Answer[] }[]
   >([]);
-
+  const [model_handler, set_model_handler] = useState(false);
   const set_radio_choice_handler = (
     index: number,
     choice: boolean | undefined
@@ -45,8 +46,9 @@ export default function Questions({ questions }: Props) {
     });
   };
   const set_btn_hanlder = (index: number) => {
-    set_btn_add([...btn_add, index])
-  }
+    if (btn_add.length === 4) set_model_handler(true);
+    set_btn_add([...btn_add, index]);
+  };
   const [confettiPieces, setConfettiPieces] = useState(0);
 
   const setAnswershandler = (index: number) => {
@@ -59,7 +61,6 @@ export default function Questions({ questions }: Props) {
     } else {
       toast.error("Wrong answer");
     }
-
   };
 
   const decreaseConfettiOverTime = () => {
@@ -81,6 +82,9 @@ export default function Questions({ questions }: Props) {
     }));
     setShuffledQuestions(shuffled);
   }, [questions]);
+  const changeCloseModel = () => {
+    set_model_handler(false);
+  };
   return (
     <div className="flex flex-col ">
       <Toaster richColors />
@@ -117,22 +121,38 @@ export default function Questions({ questions }: Props) {
                     value={answer.answer}
                     className="text-black font-medium "
                   >
-
                     {answer.answer}
                   </Radio>
                 </div>
               ))}
             </RadioGroup>
-
           </div>
-          {btn_add.some(item => item === index) && !radio_choice[index].isOK && <div key={index} className=" flex px-10"><p>{question.possible_answers.map(item => {
-            if (item.is_true) {
-              return <p key={index} className="bg-[#ffffff88] p-3 rounded-xl"> The correct answer is: {item.answer}</p>
-            }
-          })}</p>
-          </div>}
+          {btn_add.some((item) => item === index) &&
+            !radio_choice[index].isOK && (
+              <div key={index} className=" flex px-10">
+                <p>
+                  {question.possible_answers.map((item) => {
+                    if (item.is_true) {
+                      return (
+                        <p
+                          key={index}
+                          className="bg-[#ffffff88] p-3 rounded-xl"
+                        >
+                          {" "}
+                          The correct answer is: {item.answer}
+                        </p>
+                      );
+                    }
+                  })}
+                </p>
+              </div>
+            )}
 
-          <Button onPress={() => setAnswershandler(index)} isDisabled={btn_add.some(item => item === index)} className="mt-10">
+          <Button
+            onPress={() => setAnswershandler(index)}
+            isDisabled={btn_add.some((item) => item === index)}
+            className="mt-10"
+          >
             Check Answer
           </Button>
         </div>
@@ -145,6 +165,11 @@ export default function Questions({ questions }: Props) {
           height: "100vh",
         }}
         gravity={0.3}
+      />
+      <ModelFinish
+        model_handler={model_handler}
+        changeCloseModel={changeCloseModel}
+        radio_choice={radio_choice}
       />
     </div>
   );
