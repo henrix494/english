@@ -118,6 +118,7 @@ export default function Questions({ questions }: Props) {
                     value={answer.answer}
                     className="text-black font-medium "
                   >
+
                     {answer.answer}
                   </Radio>
                 </div>
