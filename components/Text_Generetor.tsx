@@ -1,8 +1,9 @@
+"use client";
 import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
 import { experimental_useObject as useObject } from "ai/react";
 import { text_schema } from "@/schema/schema";
-import { Card, Skeleton } from "@nextui-org/react";
+import { Card, Input, Skeleton } from "@nextui-org/react";
 import Qustions from "./Qustions";
 import Loader from "./Loader";
 
@@ -12,12 +13,21 @@ export default function Text_Generetor({ level }: { level: string }) {
     api: "/api/completion",
     schema: text_schema,
   });
+  const [text, set_text] = useState<string>("");
   return (
     <div className=" ">
       <div className="flex justify-center  ">
-        <Button onPress={() => submit({ level })} type="submit">
-          Generte Text and questions
-        </Button>
+        <div className="flex flex-col gap-10">
+          <Input
+            onChange={(e) => {
+              set_text(e.target.value);
+            }}
+            label="Theme of the text"
+          />
+          <Button onPress={() => submit({ level, text })} type="submit">
+            Generte Text and questions
+          </Button>
+        </div>
       </div>
       {isLoading ? (
         <Loader />

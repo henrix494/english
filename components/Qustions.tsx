@@ -47,12 +47,14 @@ export default function Questions({ questions }: Props) {
   };
   const set_btn_hanlder = (index: number) => {
     if (btn_add.length === 4) set_model_handler(true);
+
     set_btn_add([...btn_add, index]);
   };
   const [confettiPieces, setConfettiPieces] = useState(0);
 
   const setAnswershandler = (index: number) => {
     set_btn_hanlder(index);
+    console.log(btn_add);
     const selectedChoice = radio_choice.find((item) => item.index === index);
     if (selectedChoice?.isOK) {
       toast.success("You got It Right!");
@@ -127,8 +129,8 @@ export default function Questions({ questions }: Props) {
               ))}
             </RadioGroup>
           </div>
-          {btn_add.some((item) => item === index) &&
-            !radio_choice[index].isOK && (
+          {btn_add.includes(index) &&
+            !radio_choice.find((item) => item.index === index)?.isOK && (
               <div key={index} className=" flex px-10">
                 <p>
                   {question.possible_answers.map((item) => {
@@ -147,7 +149,6 @@ export default function Questions({ questions }: Props) {
                 </p>
               </div>
             )}
-
           <Button
             onPress={() => setAnswershandler(index)}
             isDisabled={btn_add.some((item) => item === index)}

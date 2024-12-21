@@ -5,7 +5,7 @@ import { text_schema } from "@/schema/schema";
 
 export async function POST(req: Request) {
   try {
-    const { level } = await req.json();
+    const { level, text } = await req.json();
     console.log(level);
     const google = createGoogleGenerativeAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -17,7 +17,9 @@ export async function POST(req: Request) {
       temperature: 0.7,
       model: google("gemini-1.5-flash-latest"),
       schema: text_schema,
-      prompt: `Generate an English text appropriate for a ${level} level with around 80 lines. The text should be unique, informative, and engaging. Random ID: ${randomId}.`,
+      prompt: `Generate an English text appropriate for a ${level} ${
+        text && `in the topic of ${text}`
+      } level with around 80 lines. The text should be unique, informative, and engaging. Random ID: ${randomId}.`,
     });
 
     return result.toTextStreamResponse();

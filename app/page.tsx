@@ -1,10 +1,19 @@
 import Level_List from "@/components/Level_List";
-export default function Home() {
+import { sql } from "@vercel/postgres";
+import Login_sign_up from "@/components/Login_sign_up";
+import { SessionProvider } from "next-auth/react";
+
+export default async function Home() {
+  const { rows } = await sql`SELECT * FROM users`;
+  console.log(rows);
   return (
-    <main className="">
-      <h2 className="text-center mt-20 text-4xl font-bold">Choose a level</h2>
-      <Level_List />
-      <div className="flex justify-center mt-10"></div>
-    </main>
+    <SessionProvider>
+      <main className="relative">
+        <Login_sign_up />
+        <h2 className="text-center mt-20 text-4xl font-bold">Choose a level</h2>
+        <Level_List />
+        <div className="flex justify-center mt-10"></div>
+      </main>
+    </SessionProvider>
   );
 }

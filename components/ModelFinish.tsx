@@ -8,8 +8,6 @@ import {
   Button,
   useDisclosure,
   Progress,
-  Badge,
-  Avatar,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 export function ModelFinish({
