@@ -2,6 +2,7 @@ import { sql } from "@vercel/postgres";
 import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { use } from "react";
 async function getUserFromDb(credentials: {
   username: string;
   password: string;
@@ -40,7 +41,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const response = await getUserFromDb(
           credentials as { username: string; password: string }
         );
-        console.log(response);
         if (!response.ok) return null;
         if (response.ok) {
           return response.json ? (await response.json()) ?? null : null;
@@ -52,4 +52,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/",
   },
+  callbacks:{
+  async session({session,token,user}){
+      session.user.id = token.sub as any
+    return session
+  }
+  }
 });
