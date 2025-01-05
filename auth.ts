@@ -2,7 +2,6 @@ import { sql } from "@vercel/postgres";
 import { compare } from "bcrypt";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { use } from "react";
 async function getUserFromDb(credentials: {
   username: string;
   password: string;

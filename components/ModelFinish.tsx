@@ -10,22 +10,31 @@ import {
   Progress,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { addAnswer } from "@/actions/addAnswer";
 export function ModelFinish({
   model_handler,
   changeCloseModel,
   radio_choice,
+  level
 }: {
   model_handler: boolean;
   changeCloseModel: () => void;
   radio_choice: { index: number; isOK: boolean }[];
+  level:string
 }) {
+  const { data: session } = useSession()
+
   const { onOpenChange } = useDisclosure();
   const [value, setValue] = useState(0);
   let totalOk = radio_choice.filter((item) => item.isOK === true).length;
-
   useEffect(() => {
     setValue((totalOk / radio_choice.length) * 100);
-  }, [radio_choice]);
+    if(model_handler && session?.user){
+      addAnswer({grade:value,level:level,user_id:session.user.id})
+    }
+  }, [radio_choice,model_handler]);
+
   return (
     <>
       <Modal
