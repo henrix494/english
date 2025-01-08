@@ -27,7 +27,6 @@ async function getUserFromDb(credentials: {
     return { ok: false };
   }
 }
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -40,7 +39,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const response = await getUserFromDb(
           credentials as { username: string; password: string }
         );
-        console.log(response);
         if (!response.ok) return null;
         if (response.ok) {
           return response.json ? (await response.json()) ?? null : null;
@@ -51,5 +49,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   pages: {
     signIn: "/",
+  },
+  callbacks: {
+    session: async (session, token, user) => {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
   },
 });

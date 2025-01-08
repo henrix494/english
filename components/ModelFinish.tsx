@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import {
   Modal,
@@ -10,22 +12,38 @@ import {
   Progress,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import sendExsam from "@/actions/sendExsam";
 export function ModelFinish({
   model_handler,
   changeCloseModel,
   radio_choice,
+  level,
+  btn_add,
 }: {
   model_handler: boolean;
   changeCloseModel: () => void;
   radio_choice: { index: number; isOK: boolean }[];
+  level: string;
+  btn_add: number;
 }) {
+  const { data: session } = useSession();
+
   const { onOpenChange } = useDisclosure();
   const [value, setValue] = useState(0);
   let totalOk = radio_choice.filter((item) => item.isOK === true).length;
 
   useEffect(() => {
     setValue((totalOk / radio_choice.length) * 100);
+    if (session && btn_add === 4) {
+      sendExsam({
+        grade: value,
+        level: level,
+        userId: session.token.sub,
+      });
+    }
   }, [radio_choice]);
+
   return (
     <>
       <Modal

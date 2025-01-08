@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@nextui-org/button";
 import { Modal, ModalContent, Form, Input } from "@nextui-org/react";
+import { signIn } from "next-auth/react";
 import React, { FormEvent, useReducer } from "react";
 import { toast, Toaster } from "sonner";
 
@@ -64,6 +65,10 @@ export default function Sign_Up({
           break;
         case 201:
           toast.success("User created successfully");
+          await signIn("credentials", {
+            username: state.username,
+            password: state.password,
+          });
           break;
         default:
           toast.error("Error");

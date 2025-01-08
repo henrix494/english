@@ -1,14 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { english_levels } from "@/constants";
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Text_Generetor from "./Text_Generetor";
+import getCount from "@/actions/getCount";
+import { useSession } from "next-auth/react";
 
 export default function Level_List() {
   const [level, set_level] = useState<{
     level: string;
     selected_index: number;
   }>();
+  const [counts, setCounts] = useState<{ [key: string]: number }>({});
+
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+      const fetchData = async () => {
+        const data = await getCount({ userId: session.token.sub });
+        data.forEach((data) => {
+          console.log(data.level);
+        });
+      };
+      fetchData();
+    }
+  }, [session]);
   return (
     <>
       <div className="flex justify-center gap-10 mt-10 flex-wrap">
@@ -33,7 +49,7 @@ export default function Level_List() {
                 <b className="text-xs">
                   Qustion <br /> Complted
                 </b>
-                <p className="text-default-500">0</p>
+                <p className="text-default-500">{counts[item] || 0}</p>
               </CardFooter>
             </Card>
           );

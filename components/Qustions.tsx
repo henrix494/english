@@ -17,6 +17,7 @@ interface Question {
 
 interface Props {
   questions: Question[];
+  level: string;
 }
 
 // Utility function to shuffle an array
@@ -27,7 +28,7 @@ const shuffleArray = (array: Answer[]) => {
     .map(({ item }) => item);
 };
 
-export default function Questions({ questions }: Props) {
+export default function Questions({ questions, level }: Props) {
   const [radio_choice, set_radio_choice] = useState<
     { index: number; isOK: boolean }[]
   >([]);
@@ -171,6 +172,8 @@ export default function Questions({ questions }: Props) {
         model_handler={model_handler}
         changeCloseModel={changeCloseModel}
         radio_choice={radio_choice}
+        level={level}
+        btn_add={btn_add.length}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 export default function Login_sign_up() {
   const { data: session } = useSession();
-
+  console.log(session?.token.sub);
   const [what_model, setWhat_model] = useState({
     login: false,
     sign_up: false,

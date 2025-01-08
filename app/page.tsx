@@ -1,11 +1,8 @@
-import Level_List from "@/components/Level_List";
-import { sql } from "@vercel/postgres";
 import Login_sign_up from "@/components/Login_sign_up";
+import Level_List from "@/components/Level_List";
 import { SessionProvider } from "next-auth/react";
 
-export default async function Home() {
-  const { rows } = await sql`SELECT * FROM users`;
-  console.log(rows);
+export default function Home() {
   return (
     <SessionProvider>
       <main className="relative">
