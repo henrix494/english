@@ -5,8 +5,12 @@ import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import Text_Generetor from "./Text_Generetor";
 import { useSession } from "next-auth/react";
 import { getCount } from "@/actions/getCount";
-
+import { usePathname } from 'next/navigation'
+import SpeachGeneretor from "./SpeachGeneretor";
 export default function Level_List() {
+  const params = usePathname()
+
+
   const { data: session } = useSession();
   const [testData, setData] = useState<any[]>([]);
   const [level, set_level] = useState<{
@@ -29,20 +33,21 @@ export default function Level_List() {
     const completedTests = testData.filter((test) => test.level === level && test.grade > 0);
     return completedTests.length;
   };
-//s
+  //s
   return (
     <>
+
       <div className="flex justify-center gap-10 mt-10 flex-wrap">
         {english_levels.map((item, index) => {
           const completedCount = getCompletedTests(item); // Get completed tests for the current level
           return (
+
             <Card
               onPress={() => {
                 set_level({ level: item, selected_index: index });
               }}
-              className={`w-[250px] h-[100px] border-0 transition-all ${
-                level?.selected_index === index && "border-2"
-              }`}
+              className={`w-[250px] h-[100px] border-0 transition-all ${level?.selected_index === index && "border-2"
+                }`}
               key={index}
               isPressable
             >
@@ -57,11 +62,14 @@ export default function Level_List() {
               </CardFooter>
             </Card>
           );
+
         })}
+
       </div>
       <div className="flex justify-center mt-10">
-        <Text_Generetor level={level?.level as string} />
+        {params === "/text_to_speach" ? <SpeachGeneretor /> : <Text_Generetor level={level?.level as string} />}
       </div>
+
     </>
   );
 }
