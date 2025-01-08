@@ -3,11 +3,11 @@ import { Button } from "@nextui-org/react";
 import React, { useState } from "react";
 import Sign_Up from "./auth/Sign_Up";
 import Log_In from "./auth/Log_In";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 export default function Login_sign_up() {
   const { data: session } = useSession();
-  console.log(session?.token.sub);
+
   const [what_model, setWhat_model] = useState({
     login: false,
     sign_up: false,
@@ -17,6 +17,9 @@ export default function Login_sign_up() {
   };
   const closeLoginModel = (set: boolean) => {
     setWhat_model({ login: set, sign_up: false });
+  };
+  const goToUserInfo = () => {
+    router.push("profile");
   };
   return (
     <div>
@@ -42,12 +45,17 @@ export default function Login_sign_up() {
           </Button>
         </div>
       ) : (
-        <Button
-          className="lg:absolute lg:left-5 font-bold"
-          onPress={() => signOut()}
-        >
-          Log out
-        </Button>
+        <div>
+          <Button
+            className="lg:absolute lg:left-5 font-bold"
+            onPress={() => signOut()}
+          >
+            Log out
+          </Button>
+          <Button onPress={goToUserInfo} className="font-bold ml-6">
+            User Info
+          </Button>
+        </div>
       )}
 
       {what_model.login ? (

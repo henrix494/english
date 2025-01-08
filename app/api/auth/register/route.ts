@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     const searchUser =
       await sql`SELECT * FROM english_users WHERE user_name=${username}`;
     if (searchUser.rows.length > 0) {
+      console.log(searchUser)
       return NextResponse.json({
         message: "user already exists",
         status: 400,
