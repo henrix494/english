@@ -1,5 +1,5 @@
 "use client";
-import { Button, cn, Radio, RadioGroup } from "@nextui-org/react";
+import { Button, cn, Radio, RadioGroup } from "@heroui/react";
 import React, { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import Confetti from "react-confetti";

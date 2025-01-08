@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
-import { Modal, ModalContent, Input, Form } from "@nextui-org/react";
+import { Button } from "@heroui/button";
+import { Modal, ModalContent, Input, Form } from "@heroui/react";
 import React from "react";
 import { signIn } from "next-auth/react";
 

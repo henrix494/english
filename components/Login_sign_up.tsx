@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import React, { useState } from "react";
 import Sign_Up from "./auth/Sign_Up";
 import Log_In from "./auth/Log_In";

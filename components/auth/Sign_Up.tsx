@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@nextui-org/button";
-import { Modal, ModalContent, Form, Input } from "@nextui-org/react";
+import { Button } from "@heroui/button";
+import { Modal, ModalContent, Form, Input } from "@heroui/react";
 import { signIn } from "next-auth/react";
 import React, { FormEvent, useReducer } from "react";
 import { toast, Toaster } from "sonner";

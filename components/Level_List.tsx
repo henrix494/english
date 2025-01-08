@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { english_levels } from "@/constants";
-import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@heroui/react";
 import Text_Generetor from "./Text_Generetor";
 import getCount from "@/actions/getCount";
 import { useSession } from "next-auth/react";

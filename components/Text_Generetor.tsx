@@ -1,9 +1,9 @@
 "use client";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import React, { useState } from "react";
 import { experimental_useObject as useObject } from "ai/react";
 import { text_schema } from "@/schema/schema";
-import { Card, Input, Skeleton } from "@nextui-org/react";
+import { Card, Input, Skeleton } from "@heroui/react";
 import Qustions from "./Qustions";
 import Loader from "./Loader";
 

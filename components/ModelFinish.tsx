@@ -10,7 +10,7 @@ import {
   Button,
   useDisclosure,
   Progress,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import sendExsam from "@/actions/sendExsam";
