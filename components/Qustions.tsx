@@ -173,7 +173,10 @@ export default function Questions({ questions, level }: Props) {
         changeCloseModel={changeCloseModel}
         radio_choice={radio_choice}
         level={level}
+<<<<<<< HEAD
         btn_add={btn_add.length}
+=======
+>>>>>>> 9864233f722213334b67ac244fe86304a8e3099c
       />
     </div>
   );

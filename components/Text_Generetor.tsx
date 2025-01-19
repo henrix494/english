@@ -57,10 +57,7 @@ export default function Text_Generetor({ level }: { level: string }) {
                     </div>
                   </div>
                   <div className="lg:w-[40%] ">
-                    <Qustions
-                      questions={item?.possible_answers}
-                      level={level}
-                    />
+                    <Qustions questions={item?.possible_answers} />
                   </div>
                 </div>
               );

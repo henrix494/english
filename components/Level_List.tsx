@@ -3,32 +3,21 @@ import React, { useEffect, useState } from "react";
 import { english_levels } from "@/constants";
 import { Card, CardBody, CardFooter } from "@heroui/react";
 import Text_Generetor from "./Text_Generetor";
-import getCount from "@/actions/getCount";
-import { useSession } from "next-auth/react";
 
 export default function Level_List() {
+  const params = usePathname();
+
+  const { data: session } = useSession();
+  const [testData, setData] = useState<any[]>([]);
   const [level, set_level] = useState<{
     level: string;
     selected_index: number;
   }>();
-  const [counts, setCounts] = useState<{ [key: string]: number }>({});
-
-  const { data: session } = useSession();
-  useEffect(() => {
-    if (session) {
-      const fetchData = async () => {
-        const data = await getCount({ userId: session.token.sub });
-        data.forEach((data) => {
-          console.log(data.level);
-        });
-      };
-      fetchData();
-    }
-  }, [session]);
   return (
     <>
       <div className="flex justify-center gap-10 mt-10 flex-wrap">
         {english_levels.map((item, index) => {
+          const completedCount = getCompletedTests(item); // Get completed tests for the current level
           return (
             <Card
               onPress={() => {
@@ -40,23 +29,25 @@ export default function Level_List() {
               key={index}
               isPressable
             >
-              <CardBody
-                className={`overflow-visible p-0 flex items-center justify-center text-3xl font-bold`}
-              >
+              <CardBody className="overflow-visible p-0 flex items-center justify-center text-3xl font-bold">
                 {item}
               </CardBody>
               <CardFooter className="text-small justify-between">
                 <b className="text-xs">
-                  Qustion <br /> Complted
+                  Question <br /> Completed
                 </b>
-                <p className="text-default-500">{counts[item] || 0}</p>
+                <p className="text-default-500">0</p>
               </CardFooter>
             </Card>
           );
         })}
       </div>
       <div className="flex justify-center mt-10">
-        <Text_Generetor level={level?.level as string} />
+        {params === "/text_to_speach" ? (
+          <SpeachGeneretor />
+        ) : (
+          <Text_Generetor level={level?.level as string} />
+        )}
       </div>
     </>
   );
