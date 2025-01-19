@@ -17,7 +17,11 @@ interface Question {
 
 interface Props {
   questions: Question[];
+<<<<<<< HEAD
   level: string;
+=======
+  level:string
+>>>>>>> 9864233f722213334b67ac244fe86304a8e3099c
 }
 
 // Utility function to shuffle an array
@@ -28,7 +32,11 @@ const shuffleArray = (array: Answer[]) => {
     .map(({ item }) => item);
 };
 
+<<<<<<< HEAD
 export default function Questions({ questions, level }: Props) {
+=======
+export default function Questions({ questions,level }: Props) {
+>>>>>>> 9864233f722213334b67ac244fe86304a8e3099c
   const [radio_choice, set_radio_choice] = useState<
     { index: number; isOK: boolean }[]
   >([]);
@@ -173,7 +181,10 @@ export default function Questions({ questions, level }: Props) {
         changeCloseModel={changeCloseModel}
         radio_choice={radio_choice}
         level={level}
+<<<<<<< HEAD
         btn_add={btn_add.length}
+=======
+>>>>>>> 9864233f722213334b67ac244fe86304a8e3099c
       />
     </div>
   );
