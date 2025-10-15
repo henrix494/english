@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
     const result = streamObject({
       temperature: 0.7,
-      model: google("gemini-1.5-flash-latest"),
+      model: google("gemini-flash-latest"),
       schema: text_schema,
       prompt: `Generate an English text appropriate for a ${level} ${
         text && `in the topic of ${text}`
